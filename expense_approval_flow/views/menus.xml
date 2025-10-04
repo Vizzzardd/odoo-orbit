@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Main menu for approval rules -->
+    <menuitem id="menu_expense_approval_config"
+              name="Approval Rules"
+              parent="hr_expense.menu_hr_expense_root"
+              sequence="20"/>
+
+    <!-- Action for approval rules -->
+    <record id="action_expense_approval_rules" model="ir.actions.act_window">
+        <field name="name">Expense Approval Rules</field>
+        <field name="res_model">expense.approval.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="groups_id" eval="[(4, ref('expense_approval_flow.group_expense_admin'))]"/>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create approval rules to automate your expense approval process
+            </p>
+        </field>
+    </record>
+
+    <!-- Restrict this action to admin group -->
+<!--    <record id="action_expense_approval_rules" model="ir.actions.act_window">-->
+<!--        <field name="groups_id" eval="[(4, ref('expense_approval_flow.group_expense_admin'))]"/>-->
+<!--    </record>-->
+
+    <!-- Submenu for approval rules -->
+    <menuitem id="menu_expense_approval_rules"
+              name="Approval Rules"
+              parent="menu_expense_approval_config"
+              action="action_expense_approval_rules"
+              sequence="10"/>
+</odoo>

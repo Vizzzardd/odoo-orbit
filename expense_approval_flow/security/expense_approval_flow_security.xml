@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Expense Admin Group -->
+    <record id="group_expense_admin" model="res.groups">
+        <field name="name">Expense Admin</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+        <field name="implied_ids" eval="[(4, ref('hr_expense.group_hr_expense_user'))]"/>
+    </record>
+    <!-- Expense Manager Group -->
+    <record id="group_expense_manager" model="res.groups">
+        <field name="name">Expense Manager</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+        <field name="implied_ids" eval="[(4, ref('hr_expense.group_hr_expense_user'))]"/>
+    </record>
+    <!-- Expense Employee Group -->
+    <record id="group_expense_employee" model="res.groups">
+        <field name="name">Expense Employee</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+        <field name="implied_ids" eval="[(4, ref('hr_expense.group_hr_expense_user'))]"/>
+    </record>
+</odoo>

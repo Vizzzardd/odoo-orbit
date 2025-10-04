@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Extend expense form view -->
+    <record id="view_expense_form_inherit_approval_flow" model="ir.ui.view">
+        <field name="name">hr.expense.form.inherit.approval.flow</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+            <button name="action_submit_expenses"
+                    string="Submit Expense"
+                    class="oe_highlight"
+                    type="object"
+                    invisible="state != 'draft'"/>
+            </xpath>
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="approval_rule_id" widget="many2one" options="{'no_create': True}"/>
+                <field name="current_approver_id" readonly="1" force_save="1"/>
+                <field name="approval_progress" widget="progressbar" options="{'editable': false}"/>
+            </xpath>
+
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="Approval Process" invisible="state == 'draft'">
+                        <field name="approval_line_ids" nolabel="1" readonly="1">
+                            <list string="Approval History">
+                                <field name="sequence"/>
+                                <field name="approver_id"/>
+                                <field name="state"/>
+                                <field name="comment"/>
+                                <field name="approval_date"/>
+                                <field name="rejection_date"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+
+            </xpath>
+
+            <xpath expr="//button[@name='action_submit_expenses']" position="before">
+                <button name="action_approve_expense"
+                        type="object"
+                        string="Approve"
+                        class="btn-primary"
+                        invisible="current_approver_id != uid or state != 'submit'"/>
+
+
+                <button name="action_reject_expense"
+                        type="object"
+                        string="Reject"
+                        class="btn-secondary"
+                        invisible="current_approver_id != uid or state != 'submit'"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Extend expense tree view -->
+    <record id="view_expense_tree_inherit_approval_flow" model="ir.ui.view">
+        <field name="name">hr.expense.tree.inherit.approval.flow</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.view_my_expenses_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="current_approver_id"/>
+                <field name="approval_progress" widget="progressbar" options="{'editable': false}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
